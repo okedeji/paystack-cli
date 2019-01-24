@@ -8,6 +8,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hills12/paystack-cli.git"
+  },
   "files": [
     "oldPaystack.js",
     "oldPaystackInline.js",
@@ -18,12 +22,15 @@
     "paystack",
     "developers",
     "tool",
-    "integrate"
+    "integrate",
+    "payment",
+    "naira"
   ],
   "dependencies": {
     "commander": "^2.9.0",
-    "inquirer": "^3.0.6"
+    "inquirer": "^3.0.6",
+    "minify": "^4.1.0"
   },
-  "author": "Tobi Okedeji",
+  "author": "Tobi Okedeji <tobiokedeji@gmail.com> (http://tobiokedeji.com/)",
   "license": "ISC"
 }

@@ -4,7 +4,7 @@ const fs = require("fs"),
     program = require("commander"),
     { prompt } = require("inquirer"),
     { oldPaystack, oldPaystackEmbed, oldPaystackInline } = require("./model/oldPaystack"),
-    { setupQuestion, confirm npm } = require("./model/questions");
+    { setupQuestion, confirm} = require("./model/questions");
 
 program
   .version('1.0.0')
