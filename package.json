@@ -2,8 +2,8 @@
   "name": "paystack-cli",
   "preferGlobal": true,
   "bin": "./index.js",
-  "version": "1.1.0",
-  "description": "A  simple CLI tool that makes paystack easier for developers to intergrate",
+  "version": "1.1.3",
+  "description": "A simple CLI tool that makes paystack easier for developers to intergrate",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
