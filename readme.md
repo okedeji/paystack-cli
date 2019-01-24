@@ -64,3 +64,7 @@ paystack-cli create embed min
 `#card_pin` is the ID of the input form that accepts card PIN.
 
 `#OTP` is the ID of the input form that accepts the OTP sent to phone.
+
+## Author
+
+### Tobi Okedeji
