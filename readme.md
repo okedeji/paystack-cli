@@ -58,11 +58,13 @@ paystack-cli create embed min
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="js/paystack-inline.js"></script>
 
-<!-- The following IDs must be included in your html file (Note that they can be anywhere according to your choice.) -->
+<!-- The following IDs must be included in 
+your html file (Note that they can be anywhere 
+according to your choice.) -->
 <form >
-    <input id="customer-email" />
-    <input id="amount" />
-    <input id="mobile-number" />
+    <input id="customer-email" placeholder="Customer Email" />
+    <input id="amount" placeholder="Amount" />
+    <input id="mobile-number" placeholder="Mobile Number" />
     <button type="button" onclick="payWithPaystack()">Pay</button> 
 </form>
 <p id="success-response"></p>
@@ -73,17 +75,23 @@ paystack-cli create embed min
 <!-- import necessary scripts here -->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://js.paystack.co/v1/inline.js"></script>
-<script src="js/paystack-embed.js"></script>
 
 <!-- include this line to initialize Paystack -->
 <div id="paystackEmbedContainer"></div>
 
-<!-- The following IDs must be included in your html file (Note that they can be anywhere according to your choice.) -->
+<!-- The following IDs and onclick attribute must be 
+included in your html file (Note that they can be anywhere 
+according to your choice.) -->
+
 <form>
-    <input id="customer-email" />
-    <input id="amount" />
+    <input id="customer-email" placeholder="Customer Email" />
+    <input id="amount" placeholder="Amount" />
+    <button type="button" onclick="pay()">Pay</button>
 </form>
 <p id="success-response"></p>
+
+<!-- Please include this at the bottom of the html file -->
+<script src="js/paystack-embed.js"></script>
 ```
 ### Paystack-js
 ```html
@@ -92,22 +100,34 @@ paystack-cli create embed min
 <script src="https://js.paystack.co/v1/paystack.js"></script>
 <script src="js/paystack.js"></script>
 
-<!-- The following data-paystack must be included in your html file (Note that they can be anywhere according to your choice.) -->
+<!-- You will have to initialize the transaction before anything. 
+    After initialization, Paystack API will respond with an 
+    access-code which you must be passed to #access_code as a text -->
+    
+<!-- You can either visit 
+    https://developers.paystack.co/reference#initialize-a-transaction
+    to get a grasp of how this can be done with cURL and you can as well 
+    do this in any server-side language of your choice-->
+
+<!-- The following data-paystack must be 
+included in your html file (Note that they can 
+be anywhere according to your choice.) -->
+ 
 <form id="paystack-card-form">
-  <input type="text" data-paystack="number">
-  <input type="text" data-paystack="cvv">
-  <input type="text" data-paystack="expiryMonth">
-  <input type="text"  data-paystack="expiryYear">
+  <input type="text" data-paystack="number" placeholder="Card Number">
+  <input type="text" data-paystack="cvv" placeholder="CVV">
+  <input type="text" data-paystack="expiryMonth" placeholder="Expiry Month">
+  <input type="text"  data-paystack="expiryYear" placeholder="Expiry Year">
   <button type="submit" data-paystack="submit">Submit</button>
 </form>
+
+<!-- if pin is requested, you can pass the PIN to #card_pin from a form -->
 
 <!-- OTP form -->
 <form id="otp-form">
-  <input type="text" data-paystack="token">
+  <input type="text" data-paystack="token" placeholder="token">
   <button type="submit" data-paystack="submit">Submit</button>
 </form>
-
-<!-- You will have to programatically pass the access code on the jQuery ID #access_code and you can create a form for the card pin with the Jquery ID #card_pin -->
 ```
 
 `#customer-email` is an ID of the input form which will accepts the email of the user or the card owner.

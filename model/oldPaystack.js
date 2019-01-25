@@ -1,15 +1,17 @@
 module.exports = {
     
     oldPaystackEmbed : `
-    PaystackPop.setup({
-        key: 'the-public-key',
-        email: $("#customer-email").val(),
-        amount: $("#amount").val(),
-        container: 'paystackEmbedContainer',
-        callback: function(response){
-            $("#success-response").text('success. transaction ref is ' + response.reference)
-        },
-    });`,
+    function pay(){
+        PaystackPop.setup({
+            key: 'pk_live_52ccf8d4d2be790a3a9000614802a9f2613fb501',
+            email: $("#customer-email").val(),
+            amount: parseInt($("#amount").val())+"00",
+            container: 'paystackEmbedContainer',
+            callback: function(response){
+                $("#success-response").text('success. transaction ref is ' + response.reference)
+            },
+        });
+    }`,
 
     oldPaystackInline : `
     function payWithPaystack(){
