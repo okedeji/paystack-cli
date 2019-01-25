@@ -2,7 +2,7 @@
   "name": "paystack-cli",
   "preferGlobal": true,
   "bin": "./index.js",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "description": "A simple CLI tool that makes paystack easier for developers to intergrate",
   "main": "index.js",
   "scripts": {

@@ -8,7 +8,7 @@ const fs = require("fs"),
     { setupQuestion, confirm} = require("./model/questions");
 
 program
-  .version('1.0.0')
+  .version('1.2.0')
   .description('A  simple CLI tool that makes paystack easier for developers to intergrate');
 
 program
