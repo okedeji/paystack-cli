@@ -54,6 +54,7 @@ paystack-cli create embed min
 ### Inline
 ```html
 <!-- import necessary scripts here -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="js/paystack-inline.js"></script>
 
@@ -70,6 +71,7 @@ paystack-cli create embed min
 ### Inline Embed
 ```html
 <!-- import necessary scripts here -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="js/paystack-embed.js"></script>
 

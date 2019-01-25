@@ -16,7 +16,7 @@ module.exports = {
         var handler = PaystackPop.setup({
             key: 'the-public-key',
             email: $("#customer-email").val(),
-            amount: $("#amount").val(),
+            amount: parseInt($("#amount").val()) + "00",
             currency: "NGN",
             //  ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
             metadata: {
