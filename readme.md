@@ -6,7 +6,7 @@ A simple CLI tool that makes [Paystack](https://paystack.com/ " Paystack") easie
 ## Install
 
 ```
-npm i paystack-cli
+npm i paystack-cli -g
 ```
 ## Usage
 
@@ -48,8 +48,65 @@ will output embed file
 ```
 paystack-cli create embed min
 ```
-## JQuery ID Exposed
+## File Usage and JQuery IDs
 > Please make sure to use the following JQuery IDs in order to interact with the outputed file.
+
+### Inline
+```html
+<!-- import necessary scripts here -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script src="js/paystack-inline.js"></script>
+
+<!-- The following IDs must be included in your html file (Note that they can be anywhere according to your choice.) -->
+<form >
+    <input id="customer-email" />
+    <input id="amount" />
+    <input id="mobile-number" />
+    <button type="button" onclick="payWithPaystack()">Pay</button> 
+</form>
+<p id="success-response"></p>
+```
+
+### Inline Embed
+```html
+<!-- import necessary scripts here -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script src="js/paystack-embed.js"></script>
+
+<!-- include this line to initialize Paystack -->
+<div id="paystackEmbedContainer"></div>
+
+<!-- The following IDs must be included in your html file (Note that they can be anywhere according to your choice.) -->
+<form>
+    <input id="customer-email" />
+    <input id="amount" />
+</form>
+<p id="success-response"></p>
+```
+### Paystack-js
+```html
+<!-- import necessary scripts here -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://js.paystack.co/v1/paystack.js"></script>
+<script src="js/paystack.js"></script>
+
+<!-- The following data-paystack must be included in your html file (Note that they can be anywhere according to your choice.) -->
+<form id="paystack-card-form">
+  <input type="text" data-paystack="number">
+  <input type="text" data-paystack="cvv">
+  <input type="text" data-paystack="expiryMonth">
+  <input type="text"  data-paystack="expiryYear">
+  <button type="submit" data-paystack="submit">Submit</button>
+</form>
+
+<!-- OTP form -->
+<form id="otp-form">
+  <input type="text" data-paystack="token">
+  <button type="submit" data-paystack="submit">Submit</button>
+</form>
+
+<!-- You will have to programatically pass the access code on the jQuery ID #access_code and you can create a form for the card pin with the Jquery ID #card_pin -->
+```
 
 `#customer-email` is an ID of the input form which will accepts the email of the user or the card owner.
 
