@@ -7,6 +7,65 @@ const fs = require("fs"),
     { oldPaystack, oldPaystackEmbed, oldPaystackInline } = require("./model/oldPaystack"),
     { setupQuestion, confirm} = require("./model/questions");
 
+let newPaystack = (old = String, recent = String, type, min)=>{
+    if(type == "paystack-js"){
+        fs.writeFile(`${recent}.js`, old, 'utf8', err => {
+            if (err) return console.log(err);
+        });
+
+        console.info("Done!!!")
+        console.info('Please check directory for "paystack.js"')    
+        
+        if(min == "min"){
+            minify(`${recent}.js`)
+            .then((data)=>{
+                fs.writeFile(`${recent}.min.js`, data, 'utf8', err => {
+                    if (err) return console.log(err);
+                    else console.info(`"${recent}.min.js" also added as minified version`)
+                });
+            })
+            .catch(console.error);
+        }
+        else if(min == undefined) return
+        else console.log(`${min} is not a correct argument`)
+    }else if(type == "inline" || type == "embed"){
+        prompt(setupQuestion).then(answers => {
+            console.info(answers)
+            prompt(confirm).then((answer)=>{
+                if(answer.correct){
+
+                    let result = old.replace(/the-public-key/g, answers.public_key);
+                    
+                        
+                    fs.writeFile(`${recent}.js`, result, 'utf8', err => {
+                        if (err) return console.log(err);
+                    });
+                    
+                    console.info("Done!!!")
+                    console.info(`Done. Please check directory for "${recent}.js"`)
+
+                    if(min == "min"){
+                        minify(`${recent}.js`)
+                        .then((data)=>{
+                            fs.writeFile(`${recent}.min.js`, data, 'utf8', err => {
+                                if (err) return console.log(err);
+                                else console.info(`"${recent}.min.js" also added as minified version`)
+                            });
+                        })
+                        .catch(console.error);
+                    }
+                    else if(min == undefined) return
+                    else console.log(`${min} is not a correct argument`)
+
+                }else{
+                    console.error("You can try again")
+                }
+            }).catch(error=>console.log(error))   
+        })
+        .catch(error=>console.log(error))
+    }
+}
+
 program
   .version('1.2.0')
   .description('A  simple CLI tool that makes paystack easier for developers to intergrate');
@@ -22,98 +81,11 @@ program
   Public Key will be requested after command have been executed.`)
   .action((type, min) => {
     if(type == "inline"){
-        prompt(setupQuestion).then(answers => {
-            console.info(answers)
-            prompt(confirm).then((answer)=>{
-                if(answer.correct == true){
-    
-                    let result = oldPaystackInline.replace(/the-public-key/g, answers.public_key);
-                    
-                        
-                    fs.writeFile("./paystack-inline.js", result, 'utf8', err => {
-                        if (err) return console.log(err);
-                    });
-                    
-                    console.info("Done!!!")
-                    console.info('Done. Please check directory for "paystack-inline.js"')
-
-                    if(min){
-                        minify('./paystack-inline.js')
-                        .then((data)=>{
-                            fs.writeFile("./paystack-inline.min.js", data, 'utf8', err => {
-                                if (err) return console.log(err);
-                                else console.info('"paystack-inline.min.js" also added as minified version')
-                            });
-                        })
-                        .catch(console.error);
-                    }
-
-                }else{
-                    console.error("You can try again")
-                }
-            }).catch((error)=>{
-                throw error
-            })   
-        })
-        .catch(()=>{
-            throw error
-        })
+        newPaystack(oldPaystackInline, "./paystack-inline", type, min)
     }else if(type == "embed"){
-        prompt(setupQuestion).then(answers => {
-            console.info(answers)
-            prompt(confirm).then((answer)=>{
-                if(answer.correct == true){
-    
-                    let result = oldPaystackEmbed.replace(/the-public-key/g, answers.public_key);
-                        
-                    fs.writeFile("./paystack-embed.js", result, 'utf8', err => {
-                        if (err) return console.log(err);
-                    });
-
-                    console.info("Done!!!")
-                    console.info('Please check directory for "paystack-embed.js"')
-
-                    if(min){
-                        minify('./paystack-embed.js')
-                        .then((data)=>{
-                            fs.writeFile("./paystack-embed.min.js", data, 'utf8', err => {
-                                if (err) return console.log(err);
-                                else console.info('"paystack-embed.min.js" also added as minified version')
-                            });
-                        })
-                        .catch(console.error);
-                    }
-                    
-                }else{
-                    console.error("You can try again")
-                }
-            }).catch((error)=>{
-                throw error
-            })   
-        })
-        .catch(()=>{
-            throw error
-        })    
+        newPaystack(oldPaystackEmbed, "./paystack-embed", type, min)
     }else if(type == "paystack-js"){
-
-        fs.writeFile("./paystack.js", oldPaystack, 'utf8', err => {
-            if (err) return console.log(err);
-        });
-
-        console.info("Done!!!")
-        console.info('Please check directory for "paystack.js"')    
-        
-        if(min){
-            minify('./paystack.js')
-            .then((data)=>{
-                fs.writeFile("./paystack.min.js", data, 'utf8', err => {
-                    if (err) return console.log(err);
-                    else console.info('"paystack.min.js" also added as minified version')
-                });
-            })
-            .catch(console.error);
-        }
-
+        newPaystack(oldPaystack, "./paystack", type, min)
     }else if(type){
         console.log(`${type} not a correct argument` )
     }

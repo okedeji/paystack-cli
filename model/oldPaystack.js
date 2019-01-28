@@ -3,7 +3,7 @@ module.exports = {
     oldPaystackEmbed : `
     function pay(){
         PaystackPop.setup({
-            key: 'pk_live_52ccf8d4d2be790a3a9000614802a9f2613fb501',
+            key: 'the-public-key',
             email: $("#customer-email").val(),
             amount: parseInt($("#amount").val())+"00",
             container: 'paystackEmbedContainer',

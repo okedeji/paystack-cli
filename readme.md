@@ -52,6 +52,9 @@ paystack-cli create embed min
 > Please make sure to use the following JQuery IDs in order to interact with the outputed file.
 
 ### Inline
+
+> for those that want to use paystack as inline. Paystack UI will pop up as a modal
+
 ```html
 <!-- import necessary scripts here -->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -71,6 +74,7 @@ according to your choice.) -->
 ```
 
 ### Inline Embed
+>for those want to use paystack as embeded frame. Paystack UI will be loaded in a container on your page
 ```html
 <!-- import necessary scripts here -->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -94,6 +98,7 @@ according to your choice.) -->
 <script src="js/paystack-embed.js"></script>
 ```
 ### Paystack-js
+>for those that want to write custom code with Paystack. Payment will have to be initialized first from the server and access code will be used. You can check [Initailize Page](https://developers.paystack.co/reference#initialize-a-transaction) to get the grasp of how it is done.
 ```html
 <!-- import necessary scripts here -->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -102,7 +107,7 @@ according to your choice.) -->
 
 <!-- You will have to initialize the transaction before anything. 
     After initialization, Paystack API will respond with an 
-    access-code which you must be passed to #access_code as a text -->
+    access-code which must be passed to #access_code as a text -->
     
 <!-- You can either visit 
     https://developers.paystack.co/reference#initialize-a-transaction
