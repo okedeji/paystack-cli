@@ -1,7 +1,7 @@
 # Paystack-cli # 
 > Paystack command line
 
-A simple CLI tool that makes [Paystack](https://paystack.com/ " Paystack") easier for developers to intergrate. It outputs a file that interacts with Paystack APIs as well as its minified version if requested.
+A simple CLI tool that makes [Paystack](https://paystack.com/ " Paystack") easier for developers to integrate. It outputs a file that interacts with Paystack APIs as well as its minified version if requested.
 
 ## Install
 
