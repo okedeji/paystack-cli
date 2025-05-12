@@ -3,7 +3,7 @@ module.exports = {
         {
             type : 'input',
             name : 'public_key',
-            message : 'Enter your Paystack Pubic Key:'
+            message : 'Enter your Paystack Public Key:'
         }
     ],
     confirm : [
