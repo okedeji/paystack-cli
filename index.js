@@ -7,68 +7,78 @@ const fs = require("fs"),
     { oldPaystack, oldPaystackEmbed, oldPaystackInline } = require("./model/oldPaystack"),
     { setupQuestion, confirm} = require("./model/questions");
 
-let newPaystack = (old = String, recent = String, type, min)=>{
-    if(type == "paystack-js"){
-        fs.writeFile(`${recent}.js`, old, 'utf8', err => {
-            if (err) return console.log(err);
+const writeFile = (path, content) => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(path, content, 'utf8', err => {
+            if (err) {
+                console.error(`Error writing file ${path}:`, err);
+                reject(err);
+            } else {
+                resolve();
+            }
         });
+    });
+};
 
-        console.info("Done!!!")
-        console.info('Please check directory for "paystack.js"')    
-        
-        if(min == "min"){
-            minify(`${recent}.js`)
-            .then((data)=>{
-                fs.writeFile(`${recent}.min.js`, data, 'utf8', err => {
-                    if (err) return console.log(err);
-                    else console.info(`"${recent}.min.js" also added as minified version`)
-                });
-            })
-            .catch(console.error);
-        }
-        else if(min == undefined) return
-        else console.log(`${min} is not a correct argument`)
-    }else if(type == "inline" || type == "embed"){
-        prompt(setupQuestion).then(answers => {
-            console.info(answers)
-            prompt(confirm).then((answer)=>{
-                if(answer.correct){
+const minifyAndSave = async (filePath) => {
+    try {
+        const minified = await minify(filePath);
+        const minPath = filePath.replace('.js', '.min.js');
+        await writeFile(minPath, minified);
+        console.info(`"${minPath}" added as minified version`);
+    } catch (err) {
+        console.error('Error during minification:', err);
+        throw err;
+    }
+};
 
-                    let result = old.replace(/the-public-key/g, answers.public_key);
-                    
-                        
-                    fs.writeFile(`${recent}.js`, result, 'utf8', err => {
-                        if (err) return console.log(err);
-                    });
-                    
-                    console.info("Done!!!")
-                    console.info(`Done. Please check directory for "${recent}.js"`)
+let newPaystack = async (old = String, recent = String, type, min) => {
+    try {
+        const filePath = `${recent}.js`;
 
-                    if(min == "min"){
-                        minify(`${recent}.js`)
-                        .then((data)=>{
-                            fs.writeFile(`${recent}.min.js`, data, 'utf8', err => {
-                                if (err) return console.log(err);
-                                else console.info(`"${recent}.min.js" also added as minified version`)
-                            });
-                        })
-                        .catch(console.error);
+        if (type === "paystack-js") {
+            await writeFile(filePath, old);
+            console.info("Done!");
+            console.info(`Please check directory for "${filePath}"`);
+
+            if (min === "min") {
+                await minifyAndSave(filePath);
+            } else if (min !== undefined) {
+                console.error(`"${min}" is not a correct argument`);
+            }
+        } else if (type === "inline" || type === "embed") {
+            try {
+                const answers = await prompt(setupQuestion);
+                const confirmation = await prompt(confirm);
+
+                if (confirmation.correct) {
+                    const result = old.replace(/the-public-key/g, answers.public_key);
+                    await writeFile(filePath, result);
+                    console.info("Done!");
+                    console.info(`Please check directory for "${filePath}"`);
+
+                    if (min === "min") {
+                        await minifyAndSave(filePath);
+                    } else if (min !== undefined) {
+                        console.error(`"${min}" is not a correct argument`);
                     }
-                    else if(min == undefined) return
-                    else console.log(`${min} is not a correct argument`)
-
-                }else{
-                    console.error("You can try again")
+                } else {
+                    console.error("You can try again");
                 }
-            }).catch(error=>console.log(error))   
-        })
-        .catch(error=>console.log(error))
+            } catch (err) {
+                console.error("Error during prompt:", err);
+                throw err;
+            }
+        }
+    } catch (err) {
+        console.error("Operation failed:", err);
+        throw err;
     }
 }
 
 program
-  .version('1.2.0')
-  .description('A  simple CLI tool that makes paystack easier for developers to intergrate');
+  .version('1.2.3')
+  .description('A simple CLI tool that makes paystack easier for developers to integrate');
 
 program
   .command('create <type> [min]')
