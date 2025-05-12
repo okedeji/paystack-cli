@@ -10,11 +10,11 @@ const fs = require("fs"),
 let newPaystack = (old = String, recent = String, type, min)=>{
     if(type == "paystack-js"){
         fs.writeFile(`${recent}.js`, old, 'utf8', err => {
-            if (err) return console.log(err);
-        });
-
-        console.info("Done!!!")
-        console.info('Please check directory for "paystack.js"')    
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.info('Please check directory for "paystack.js"')    
         
         if(min == "min"){
             minify(`${recent}.js`)
@@ -38,11 +38,11 @@ let newPaystack = (old = String, recent = String, type, min)=>{
                     
                         
                     fs.writeFile(`${recent}.js`, result, 'utf8', err => {
-                        if (err) return console.log(err);
-                    });
-                    
-                    console.info("Done!!!")
-                    console.info(`Done. Please check directory for "${recent}.js"`)
+                        if (err) {
+                            console.error(err);
+                            return;
+                        }
+                        console.info(`Please check directory for "${recent}.js"`)
 
                     if(min == "min"){
                         minify(`${recent}.js`)
@@ -67,8 +67,8 @@ let newPaystack = (old = String, recent = String, type, min)=>{
 }
 
 program
-  .version('1.2.0')
-  .description('A  simple CLI tool that makes paystack easier for developers to intergrate');
+  .version('1.2.3')
+  .description('A simple CLI tool that makes paystack easier for developers to integrate');
 
 program
   .command('create <type> [min]')
