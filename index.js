@@ -10,24 +10,30 @@ const fs = require("fs"),
 let newPaystack = (old = String, recent = String, type, min)=>{
     if(type == "paystack-js"){
         fs.writeFile(`${recent}.js`, old, 'utf8', err => {
-            if (err) return console.log(err);
-        });
-
-        console.info("Done!!!")
-        console.info('Please check directory for "paystack.js"')    
-        
-        if(min == "min"){
-            minify(`${recent}.js`)
-            .then((data)=>{
-                fs.writeFile(`${recent}.min.js`, data, 'utf8', err => {
-                    if (err) return console.log(err);
-                    else console.info(`"${recent}.min.js" also added as minified version`)
+            if (err) {
+                console.error("Error writing file:", err);
+                return;
+            }
+            console.info(`Please check directory for "${recent}.js"`);    
+            
+            if(min == "min"){
+                minify(`${recent}.js`)
+                .then((data)=>{
+                    fs.writeFile(`${recent}.min.js`, data, 'utf8', err => {
+                        if (err) {
+                            console.error("Error writing minified file:", err);
+                            return;
+                        }
+                        console.info(`"${recent}.min.js" also added as minified version`);
+                    });
+                })
+                .catch((err) => {
+                    console.error("Error minifying file:", err);
                 });
-            })
-            .catch(console.error);
-        }
-        else if(min == undefined) return
-        else console.log(`${min} is not a correct argument`)
+            }
+            else if(min == undefined) return;
+            else console.error(`Error: "${min}" is not a correct argument`);
+        });
     }else if(type == "inline" || type == "embed"){
         prompt(setupQuestion).then(answers => {
             console.info(answers)
@@ -36,26 +42,31 @@ let newPaystack = (old = String, recent = String, type, min)=>{
 
                     let result = old.replace(/the-public-key/g, answers.public_key);
                     
-                        
                     fs.writeFile(`${recent}.js`, result, 'utf8', err => {
-                        if (err) return console.log(err);
-                    });
-                    
-                    console.info("Done!!!")
-                    console.info(`Done. Please check directory for "${recent}.js"`)
+                        if (err) {
+                            console.error("Error writing file:", err);
+                            return;
+                        }
+                        console.info(`Please check directory for "${recent}.js"`);
 
-                    if(min == "min"){
-                        minify(`${recent}.js`)
-                        .then((data)=>{
-                            fs.writeFile(`${recent}.min.js`, data, 'utf8', err => {
-                                if (err) return console.log(err);
-                                else console.info(`"${recent}.min.js" also added as minified version`)
+                        if(min == "min"){
+                            minify(`${recent}.js`)
+                            .then((data)=>{
+                                fs.writeFile(`${recent}.min.js`, data, 'utf8', err => {
+                                    if (err) {
+                                        console.error("Error writing minified file:", err);
+                                        return;
+                                    }
+                                    console.info(`"${recent}.min.js" also added as minified version`);
+                                });
+                            })
+                            .catch((err) => {
+                                console.error("Error minifying file:", err);
                             });
-                        })
-                        .catch(console.error);
-                    }
-                    else if(min == undefined) return
-                    else console.log(`${min} is not a correct argument`)
+                        }
+                        else if(min == undefined) return;
+                        else console.error(`Error: "${min}" is not a correct argument`);
+                    });
 
                 }else{
                     console.error("You can try again")
@@ -67,7 +78,7 @@ let newPaystack = (old = String, recent = String, type, min)=>{
 }
 
 program
-  .version('1.2.0')
+  .version('1.2.3')
   .description('A  simple CLI tool that makes paystack easier for developers to intergrate');
 
 program
