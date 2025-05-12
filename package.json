@@ -3,7 +3,7 @@
   "preferGlobal": true,
   "bin": "./index.js",
   "version": "1.2.3",
-  "description": "A simple CLI tool that makes paystack easier for developers to intergrate",
+  "description": "A simple CLI tool that makes paystack easier for developers to integrate",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,9 +25,9 @@
     "naira"
   ],
   "dependencies": {
-    "commander": "^2.9.0",
-    "inquirer": "^3.0.6",
-    "minify": "^4.1.0"
+    "commander": "^2.20.3",
+    "inquirer": "^8.2.5",
+    "minify": "^9.2.0"
   },
   "author": "Tobi Okedeji <tobiokedeji@gmail.com> (http://tobiokedeji.com/)",
   "license": "ISC"
