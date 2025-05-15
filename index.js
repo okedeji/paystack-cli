@@ -10,11 +10,12 @@ const fs = require("fs"),
 let newPaystack = (old = String, recent = String, type, min)=>{
     if(type == "paystack-js"){
         fs.writeFile(`${recent}.js`, old, 'utf8', err => {
-            if (err) return console.log(err);
+            if (err) {
+                console.error("Error writing file:", err);
+                return;
+            }
+            console.info('Successfully created "paystack.js"');
         });
-
-        console.info("Done!!!")
-        console.info('Please check directory for "paystack.js"')    
         
         if(min == "min"){
             minify(`${recent}.js`)
@@ -38,18 +39,22 @@ let newPaystack = (old = String, recent = String, type, min)=>{
                     
                         
                     fs.writeFile(`${recent}.js`, result, 'utf8', err => {
-                        if (err) return console.log(err);
+                        if (err) {
+                            console.error("Error writing file:", err);
+                            return;
+                        }
+                        console.info(`Successfully created "${recent}.js"`);
                     });
-                    
-                    console.info("Done!!!")
-                    console.info(`Done. Please check directory for "${recent}.js"`)
 
                     if(min == "min"){
                         minify(`${recent}.js`)
                         .then((data)=>{
                             fs.writeFile(`${recent}.min.js`, data, 'utf8', err => {
-                                if (err) return console.log(err);
-                                else console.info(`"${recent}.min.js" also added as minified version`)
+                                if (err) {
+                                    console.error("Error writing minified file:", err);
+                                    return;
+                                }
+                                console.info(`Successfully created "${recent}.min.js"`);
                             });
                         })
                         .catch(console.error);
@@ -67,8 +72,8 @@ let newPaystack = (old = String, recent = String, type, min)=>{
 }
 
 program
-  .version('1.2.0')
-  .description('A  simple CLI tool that makes paystack easier for developers to intergrate');
+  .version('1.2.3')
+  .description('A simple CLI tool that makes paystack easier for developers to integrate');
 
 program
   .command('create <type> [min]')
