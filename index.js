@@ -10,7 +10,10 @@ const fs = require("fs"),
 let newPaystack = (old = String, recent = String, type, min)=>{
     if(type == "paystack-js"){
         fs.writeFile(`${recent}.js`, old, 'utf8', err => {
-            if (err) return console.log(err);
+            if (err) {
+                console.error('Error writing file:', err);
+                return;
+            }
         });
 
         console.info("Done!!!")
@@ -20,8 +23,11 @@ let newPaystack = (old = String, recent = String, type, min)=>{
             minify(`${recent}.js`)
             .then((data)=>{
                 fs.writeFile(`${recent}.min.js`, data, 'utf8', err => {
-                    if (err) return console.log(err);
-                    else console.info(`"${recent}.min.js" also added as minified version`)
+                    if (err) {
+                        console.error('Error writing minified file:', err);
+                        return;
+                    }
+                    console.info(`"${recent}.min.js" also added as minified version`)
                 });
             })
             .catch(console.error);
@@ -38,11 +44,13 @@ let newPaystack = (old = String, recent = String, type, min)=>{
                     
                         
                     fs.writeFile(`${recent}.js`, result, 'utf8', err => {
-                        if (err) return console.log(err);
+                        if (err) {
+                            console.error('Error writing file:', err);
+                            return;
+                        }
                     });
                     
-                    console.info("Done!!!")
-                    console.info(`Done. Please check directory for "${recent}.js"`)
+                    console.info(`Done! Please check directory for "${recent}.js"`)
 
                     if(min == "min"){
                         minify(`${recent}.js`)
@@ -67,7 +75,7 @@ let newPaystack = (old = String, recent = String, type, min)=>{
 }
 
 program
-  .version('1.2.0')
+  .version('1.2.3')
   .description('A  simple CLI tool that makes paystack easier for developers to intergrate');
 
 program
