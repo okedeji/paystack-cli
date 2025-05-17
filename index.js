@@ -41,8 +41,7 @@ let newPaystack = (old = String, recent = String, type, min)=>{
                         if (err) return console.log(err);
                     });
                     
-                    console.info("Done!!!")
-                    console.info(`Done. Please check directory for "${recent}.js"`)
+                    console.info(`Done! Please check directory for "${recent}.js"`)
 
                     if(min == "min"){
                         minify(`${recent}.js`)
@@ -67,8 +66,8 @@ let newPaystack = (old = String, recent = String, type, min)=>{
 }
 
 program
-  .version('1.2.0')
-  .description('A  simple CLI tool that makes paystack easier for developers to intergrate');
+  .version('1.2.3')
+  .description('A simple CLI tool that makes paystack easier for developers to integrate');
 
 program
   .command('create <type> [min]')
